@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../shared/menu_bottom.dart';
 import '../shared/menu_drawer.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -9,6 +10,7 @@ class IntroScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Hello David')),
         drawer: MenuDrawer(),
+        bottomNavigationBar: MenuBottom(),
         body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -34,3 +36,5 @@ class IntroScreen extends StatelessWidget {
                     )))));
   }
 }
+
+
