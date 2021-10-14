@@ -26,7 +26,7 @@ class MenuDrawer extends StatelessWidget {
     menuItems.add(DrawerHeader(
         decoration: BoxDecoration(color: Colors.blueGrey),
         child: Text(
-          'Globe Fitness Gym',
+          'David Fitness Gym',
           style: TextStyle(color: Colors.white, fontSize: 28),
         )));
     menuTitles.forEach((String element) {

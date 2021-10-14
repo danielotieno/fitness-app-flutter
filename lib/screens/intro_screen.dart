@@ -8,7 +8,7 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Hello David')),
+        appBar: AppBar(title: Text('David Fitness Gym')),
         drawer: MenuDrawer(),
         bottomNavigationBar: MenuBottom(),
         body: Container(
@@ -25,7 +25,7 @@ class IntroScreen extends StatelessWidget {
                       color: Colors.white70,
                     ),
                     child: Text(
-                      'Hey is greetings from Flutter App',
+                      'Welcome to David Fitness Gym\n No Pain No Gain',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 22, shadows: [
                         Shadow(
