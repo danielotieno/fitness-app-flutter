@@ -33,8 +33,9 @@ class _BmiScreenState extends State<BmiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    heightMessage = 'Please add height ' + ((isMetric) ? 'Meters' : 'Inches');
-    weightMessage = 'Please add weight ' + ((isMetric) ? 'Kgs' : 'Pounds');
+    heightMessage =
+        'Please add height in ' + ((isMetric) ? 'Meters' : 'Inches');
+    weightMessage = 'Please add weight in ' + ((isMetric) ? 'Kgs' : 'Pounds');
 
     return Scaffold(
       appBar: AppBar(
@@ -61,15 +62,21 @@ class _BmiScreenState extends State<BmiScreen> {
                 ),
               ),
             ], isSelected: isSelected, onPressed: toggleMeasure),
-            TextField(
-              controller: textHeight,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(hintText: heightMessage),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: TextField(
+                controller: textHeight,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: heightMessage),
+              ),
             ),
-            TextField(
-              controller: textWeight,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(hintText: weightMessage),
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: TextField(
+                controller: textWeight,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(hintText: weightMessage),
+              ),
             ),
             ElevatedButton(
                 onPressed: findBMI,
