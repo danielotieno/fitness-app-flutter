@@ -42,45 +42,47 @@ class _BmiScreenState extends State<BmiScreen> {
       ),
       bottomNavigationBar: MenuBottom(),
       drawer: MenuDrawer(),
-      body: Column(
-        children: [
-          ToggleButtons(children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Metric',
-                style: TextStyle(fontSize: fontSize),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ToggleButtons(children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Metric',
+                  style: TextStyle(fontSize: fontSize),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Imperial',
-                style: TextStyle(fontSize: fontSize),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Imperial',
+                  style: TextStyle(fontSize: fontSize),
+                ),
               ),
+            ], isSelected: isSelected, onPressed: toggleMeasure),
+            TextField(
+              controller: textHeight,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(hintText: heightMessage),
             ),
-          ], isSelected: isSelected, onPressed: toggleMeasure),
-          TextField(
-            controller: textHeight,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(hintText: heightMessage),
-          ),
-          TextField(
-            controller: textWeight,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(hintText: weightMessage),
-          ),
-          ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'Calculate BMI',
-                style: TextStyle(fontSize: fontSize),
-              )),
-          Text(
-            result,
-            style: TextStyle(fontSize: fontSize),
-          )
-        ],
+            TextField(
+              controller: textWeight,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(hintText: weightMessage),
+            ),
+            ElevatedButton(
+                onPressed: findBMI,
+                child: Text(
+                  'Calculate BMI',
+                  style: TextStyle(fontSize: fontSize),
+                )),
+            Text(
+              result,
+              style: TextStyle(fontSize: fontSize),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -95,6 +97,21 @@ class _BmiScreenState extends State<BmiScreen> {
     }
     setState(() {
       isSelected = [isMetric, isImperial];
+    });
+  }
+
+  void findBMI() {
+    double bmi = 0;
+    double height = double.tryParse(textHeight.text) ?? 0;
+    double weight = double.tryParse(textWeight.text) ?? 0;
+
+    if (isMetric) {
+      bmi = weight / (height * height);
+    } else {
+      bmi = weight * 703 / (height * height);
+    }
+    setState(() {
+      result = 'Your BMI is ' + bmi.toStringAsFixed(2);
     });
   }
 }
