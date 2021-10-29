@@ -11,25 +11,38 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  final TextEditingController textCity = TextEditingController();
   Weather result = Weather('', '', 0, 0, 0, 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Weather Information'),
-      ),
-      body: Column(
-        children: [
-          ElevatedButton(onPressed: getData, child: Text('Get Data')),
-          Text(result.name),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Weather Information'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16),
+          child: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: TextField(
+                  controller: textCity,
+                  decoration: InputDecoration(
+                      hintText: 'Enter a City',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: getData,
+                      )),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   Future getData() async {
     HttpHelper helper = HttpHelper();
-    result = await helper.getWeather('Mombasa');
+    result = await helper.getWeather(textCity.text);
     setState(() {});
   }
 }
