@@ -69,6 +69,16 @@ class _BmiScreenState extends State<BmiScreen> {
             controller: textWeight,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(hintText: weightMessage),
+          ),
+          ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                'Calculate BMI',
+                style: TextStyle(fontSize: fontSize),
+              )),
+          Text(
+            result,
+            style: TextStyle(fontSize: fontSize),
           )
         ],
       ),
