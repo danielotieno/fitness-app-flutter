@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../shared/menu_bottom.dart';
 import '../shared/menu_drawer.dart';
 
@@ -10,6 +11,9 @@ class BmiScreen extends StatefulWidget {
 }
 
 class _BmiScreenState extends State<BmiScreen> {
+  final TextEditingController textHeight = TextEditingController();
+  final TextEditingController textWeight = TextEditingController();
+
   final double fontSize = 18;
   String result = '';
   bool isMetric = true;
@@ -17,6 +21,8 @@ class _BmiScreenState extends State<BmiScreen> {
   double? height;
   double? weight;
   late List<bool> isSelected;
+  String heightMessage = '';
+  String weightMessage = '';
 
   @override
   void initState() {
@@ -27,6 +33,9 @@ class _BmiScreenState extends State<BmiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    heightMessage = 'Please add height ' + ((isMetric) ? 'Meters' : 'Inches');
+    weightMessage = 'Please add weight ' + ((isMetric) ? 'Kgs' : 'Pounds');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI Calculator'),
@@ -50,7 +59,17 @@ class _BmiScreenState extends State<BmiScreen> {
                 style: TextStyle(fontSize: fontSize),
               ),
             ),
-          ], isSelected: isSelected, onPressed: toggleMeasure)
+          ], isSelected: isSelected, onPressed: toggleMeasure),
+          TextField(
+            controller: textHeight,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: heightMessage),
+          ),
+          TextField(
+            controller: textWeight,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: weightMessage),
+          )
         ],
       ),
     );
