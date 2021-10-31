@@ -79,9 +79,13 @@ class _SessionsScreenState extends State<SessionsScreen> {
   Future saveSession() async {
     DateTime now = DateTime.now();
     String today = '${now.day}-${now.month}-${now.year}';
+    int id = helper.getCounter() + 1;
     Session newSession = Session(
-        1, today, textDescription.text, int.tryParse(textDuration.text) ?? 0);
-    helper.writeSession(newSession);
+        id, today, textDescription.text, int.tryParse(textDuration.text) ?? 0);
+    helper.writeSession(newSession).then((_) {
+      updateScreen();
+      helper.setCounter();
+    });
     textDescription.text = '';
     textDuration.text = '';
     Navigator.pop(context);
