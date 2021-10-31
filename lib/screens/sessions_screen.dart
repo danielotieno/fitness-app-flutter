@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../data/session.dart';
+import '../data/sp_helper.dart';
+
 class SessionsScreen extends StatefulWidget {
   const SessionsScreen({Key? key}) : super(key: key);
 
@@ -8,6 +11,16 @@ class SessionsScreen extends StatefulWidget {
 }
 
 class _SessionsScreenState extends State<SessionsScreen> {
+  final TextEditingController textDescription = TextEditingController();
+  final TextEditingController textDuration = TextEditingController();
+  final SPHelper helper = SPHelper();
+
+  @override
+  void initState() {
+    helper.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +30,55 @@ class _SessionsScreenState extends State<SessionsScreen> {
       body: Container(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showSessionDialog(context);
+        },
       ),
     );
+  }
+
+  Future<dynamic> showSessionDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Insert Training Session'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextField(
+                    controller: textDescription,
+                    decoration: InputDecoration(hintText: 'Description'),
+                  ),
+                  TextField(
+                    controller: textDuration,
+                    decoration: InputDecoration(hintText: 'Duration'),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    textDescription.text = '';
+                    textDuration.text = '';
+                  },
+                  child: Text('Cancel')),
+              ElevatedButton(onPressed: saveSession, child: Text('Save'))
+            ],
+          );
+        });
+  }
+
+  Future saveSession() async {
+    DateTime now = DateTime.now();
+    String today = '${now.day}-${now.month}-${now.year}';
+    Session newSession = Session(
+        1, today, textDescription.text, int.tryParse(textDuration.text) ?? 0);
+    helper.writeSession(newSession);
+    textDescription.text = '';
+    textDuration.text = '';
+    Navigator.pop(context);
   }
 }
